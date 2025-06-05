@@ -7,12 +7,13 @@ This document outlines the core database structure for the Receptfix app. The de
 ## Users (`users`)
 Stores registered users.
 
-| Column     | Description               |
-|------------|---------------------------|
-| `id`       | Unique identifier (UUID)  |
-| `email`    | Login email               |
-| `password` | Hashed password           |
-| `role`     | USER or ADMIN             |
+| Column      | Description               |
+|-------------|---------------------------|
+| `id`        | Unique identifier (UUID)  |
+| `email`     | Login email               |
+| `username`  | Username                  |
+| `password`  | Hashed password           |
+| `role`      | USER or ADMIN             |
 
 - A user can own recipes, ingredients, units, shopping lists, and unit conversions.
 
