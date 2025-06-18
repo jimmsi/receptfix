@@ -1,4 +1,4 @@
-package se.jimmyemanuelsson.receptfix.backend.service;
+package se.jimmyemanuelsson.receptfix.backend.security.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
