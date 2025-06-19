@@ -9,4 +9,4 @@
 # IntelliJ
 /.idea/
 # Local environment
-.env
+backend/.env
