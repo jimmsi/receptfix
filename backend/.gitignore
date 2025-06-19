@@ -34,7 +34,7 @@ build/
 .vscode/
 
 ### Database & Secrets ###
-.env
+../.env
 docker-compose.override.yml
 
 ### Logs ###
