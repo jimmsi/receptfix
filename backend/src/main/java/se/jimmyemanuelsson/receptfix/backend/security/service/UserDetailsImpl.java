@@ -25,12 +25,13 @@ public class UserDetailsImpl implements UserDetails {
         return user.getPassword();
     }
 
+    /**
+     * Returns the user's email, which is used as the login identifier.
+     */
     @Override
     public String getUsername() {
         return user.getEmail();
     }
-
-
 
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }

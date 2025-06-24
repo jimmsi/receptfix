@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import se.jimmyemanuelsson.receptfix.backend.dto.UserDto;
 import se.jimmyemanuelsson.receptfix.backend.dto.UserRegisterDto;
+import se.jimmyemanuelsson.receptfix.backend.exceptions.EmailAlreadyExistsException;
+import se.jimmyemanuelsson.receptfix.backend.exceptions.UsernameAlreadyExistsException;
 import se.jimmyemanuelsson.receptfix.backend.model.Role;
 import se.jimmyemanuelsson.receptfix.backend.model.User;
 import se.jimmyemanuelsson.receptfix.backend.repository.UserRepository;
@@ -22,11 +24,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto register(UserRegisterDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
-            throw new IllegalArgumentException("Email already in use");
+            throw new EmailAlreadyExistsException(dto.getEmail());
         }
 
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new IllegalArgumentException("Username already in use");
+            throw new UsernameAlreadyExistsException(dto.getUsername());
         }
 
         User user = User.builder()

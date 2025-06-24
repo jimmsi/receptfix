@@ -29,7 +29,8 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(auth);
             return jwtTokenProvider.generateToken(auth);
         } catch (AuthenticationException e) {
-            throw new InvalidLoginException("Invalid email or password");
+            e.printStackTrace();
+            throw new InvalidLoginException();
         }
 
     }
