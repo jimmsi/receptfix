@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import se.jimmyemanuelsson.receptfix.backend.security.CustomAuthenticationEntryPoint;
 import se.jimmyemanuelsson.receptfix.backend.security.jwt.JwtAuthenticationFilter;
 import se.jimmyemanuelsson.receptfix.backend.security.jwt.JwtTokenProvider;
 import se.jimmyemanuelsson.receptfix.backend.security.service.UserDetailsServiceImpl;
@@ -20,6 +21,7 @@ public class WebSecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsServiceImpl userDetailsService;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,6 +35,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/test/user").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

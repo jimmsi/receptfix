@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import se.jimmyemanuelsson.receptfix.backend.dto.LoginRequestDto;
+import se.jimmyemanuelsson.receptfix.backend.dto.LoginResponseDto;
 import se.jimmyemanuelsson.receptfix.backend.dto.UserMeDto;
 import se.jimmyemanuelsson.receptfix.backend.security.service.AuthService;
 import se.jimmyemanuelsson.receptfix.backend.security.service.UserDetailsImpl;
@@ -20,9 +21,9 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDto loginRequest) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequest) {
         String token = authService.login(loginRequest);
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
     @GetMapping("/me")

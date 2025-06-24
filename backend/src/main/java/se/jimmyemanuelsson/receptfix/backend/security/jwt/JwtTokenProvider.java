@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import se.jimmyemanuelsson.receptfix.backend.exceptions.InvalidJwtException;
 
 import java.security.Key;
 import java.util.Date;
@@ -50,23 +51,22 @@ public class JwtTokenProvider {
         return parseClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public void validateToken(String token) {
         try {
             parseClaims(token);
-            return true;
         } catch (ExpiredJwtException e) {
-            System.out.println("Token expired");
+            throw new InvalidJwtException("Token expired", e);
         } catch (UnsupportedJwtException e) {
-            System.out.println("Unsupported JWT");
+            throw new InvalidJwtException("Unsupported JWT", e);
         } catch (MalformedJwtException e) {
-            System.out.println("Malformed JWT");
+            throw new InvalidJwtException("Malformed JWT", e);
         } catch (SignatureException e) {
-            System.out.println("Invalid signature");
+            throw new InvalidJwtException("Invalid signature", e);
         } catch (IllegalArgumentException e) {
-            System.out.println("Empty token");
+            throw new InvalidJwtException("Empty or null token", e);
         }
-        return false;
     }
+
 
     private Claims parseClaims(String token) {
         return Jwts.parserBuilder()
